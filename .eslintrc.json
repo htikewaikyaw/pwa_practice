@@ -1,3 +1,23 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "next/core-web-vitals", 
+    "next/typescript", 
+    "prettier"
+  ],
+  "rules": {
+    "no-unused-vars": "off", // Disable the base rule
+    "@typescript-eslint/no-unused-vars": [
+      "warn", // or "error" if you want it as an error
+      {
+        "vars": "all", // Check all variables
+        "args": "none", // Do not check unused function arguments
+        "ignoreRestSiblings": true, // Ignore unused variables in rest siblings
+        "varsIgnorePattern": "^_", // Ignore variables starting with an underscore
+        "argsIgnorePattern": "^_" // Ignore arguments starting with an underscore
+      }
+    ],
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/no-unescaped-entities": "off" // Disable the rule globally
+  }
 }
