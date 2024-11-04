@@ -16,18 +16,17 @@ export class PwaPracticeStack extends cdk.Stack {
     // });
 
     const UserApiFunction = new lambda.Function(this, 'UserApi', {
-      functionName:'UserApiFunction',
+      functionName: 'UserApiFunction',
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: 'index.handler',
       code: lambda.Code.fromAsset('src/pwa-practice/user/lambda'),
     });
-    
+
     const OperationsApiFunction = new lambda.Function(this, 'OperationsApi', {
-      functionName:'OperationsApiFunction',
+      functionName: 'OperationsApiFunction',
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: 'index.handler',
       code: lambda.Code.fromAsset('src/pwa-practice/operations/lambda'),
     });
-    
   }
 }
