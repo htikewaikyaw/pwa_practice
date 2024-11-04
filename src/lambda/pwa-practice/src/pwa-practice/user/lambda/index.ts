@@ -9,14 +9,14 @@ export const handler: Handler = async (event: APIGatewayEvent) => {
   if (requestMetod === apiRequests.get && requestPath === apiPaths.user_api_test) {
     return buildResponse(200, { message: 'success', data: { ok: 'api is working well.' } });
   } else if (requestMetod === apiRequests.post && requestPath === apiPaths.user) {
-    // console.log('testing................', event);
+    console.log('testing................', event);
     const registerData = event.body as string;
     console.log(event.body);
-
     const data = JSON.parse(registerData);
     // const data = JSON.parse(registerData)
     const result = await insertFunction(data, dbTableNames.user);
     if (result.operation === 'error') {
+       console.error("error")
       return buildResponse(400, { message: 'error', error: result.message });
     }
     const response = {
