@@ -13,7 +13,6 @@ export const handler: Handler = async (event: APIGatewayEvent) => {
     const registerData = event.body as string;
     console.log(event.body);
     const data = JSON.parse(registerData);
-    // const data = JSON.parse(registerData)
     const result = await insertFunction(data, dbTableNames.user);
     if (result.operation === 'error') {
        console.error("error")
@@ -25,7 +24,7 @@ export const handler: Handler = async (event: APIGatewayEvent) => {
       email: result.data.email,
       filename: result.data.filename,
     };
-    return buildResponse(201, { message: 'success', data: response });
+    return buildResponse(201, { message: 'success', result:response});
     // return buildResponse(201, { message: 'success', data: data });
   } else if (requestMetod === apiRequests.get && requestPath === apiPaths.user) {
     const parram = event.queryStringParameters as Object;

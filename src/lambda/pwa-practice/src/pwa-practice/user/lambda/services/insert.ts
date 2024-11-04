@@ -1,5 +1,6 @@
 import { dbTableNames } from '../resources';
-import { pool } from './db-connection';
+import { pool,database } from './db-connection';
+
 
 export const insertQuery = (targetTable: string): { query: string } => {
   let queries: { query: string } = { query: '' };
@@ -23,6 +24,12 @@ export const insertFunction = async (inputData: Object, table: string) => {
   const data = inputData;
   const targetTable = table;
   /* database operation begion*/
+
+  console.log("fuunction being")
+  console.log("user",database.dbUser);
+  console.log("dbname",database.dbName);
+  console.log("host",database.dbHost);
+  console.log("pass",database.dbPassword);
   const dbClient = await pool.connect();
   try {
     const query = insertQuery(table).query;
