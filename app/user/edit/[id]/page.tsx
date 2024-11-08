@@ -9,9 +9,23 @@ type Props = {
 };
 
 export default async function UserEdit({ params }: { params: Props }) {
-  const user = await UserRepository.findUnique(params.id);
-  const roles = await RoleRepository.findMany();
-  const departments = await DepartmentRepository.findMany();
+  const url = `${process.env.GETUSERS_API_LINK}?id=${params.id}`;
+  const eidtUser = await fetch(url, { cache: 'no-store' }).then((res) => res.json());
+  const user = eidtUser.data.result.data;
+  const roles = await fetch(`${process.env.ROLE_API_LINK}`, { cache: 'no-store' }).then((res) =>
+    res.json(),
+  );
 
-  return <UserForm user={user} departments={departments} roles={roles} onSuccessUrl='/user/' />;
+  const departments = await fetch(`${process.env.DEPT_API_LINK}`, { cache: 'no-store' }).then(
+    (res) => res.json(),
+  );
+
+  return (
+    <UserForm
+      user={user}
+      departments={departments.data.result.data}
+      roles={roles.data.result.data}
+      onSuccessUrl='/user/'
+    />
+  );
 }

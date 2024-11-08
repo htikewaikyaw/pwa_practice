@@ -5,6 +5,8 @@ export const apiPaths = {
   user: '/user',
   login: '/login',
   register: '/register',
+  department: '/department',
+  role: '/role',
 };
 
 export const dbTableNames = {

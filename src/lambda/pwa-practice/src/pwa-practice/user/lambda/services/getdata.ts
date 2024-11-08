@@ -29,10 +29,82 @@ export const getSingleData = async (inputKeyName: string, inputKey: string, tabl
     if (response.rows.length == 0) {
       return { operation: 'error', message: 'Not Found!' };
     }
-    const resultInsert = response.rows[0];
-    return { operation: 'success', data: resultInsert };
+    const result = response.rows[0];
+    return { operation: 'success', data: result };
   } catch (e: any) {
     console.error('red result', e);
+    if (e.code == '42703') {
+      return { operation: 'error', message: e.routine };
+    }
+    return { operation: 'error', message: 'unknow error!' };
+  } finally {
+    dbClient.release();
+    console.log('final database release on insert');
+  }
+};
+
+export const getUserData = async () => {
+  const dbClient = await pool.connect();
+  try {
+    const query = `
+      SELECT  
+        "User".*, 
+        "Role"."name" as "roleName", 
+        "Department"."name" as "departmentName"
+      FROM 
+        "User"
+      JOIN 
+        "Role" ON "User"."roleId" = "Role"."id"
+      JOIN 
+        "Department" ON "User"."departmentId" = "Department"."id";
+    `;
+    const response = await pool.query(query);
+    const result = response.rows;
+    return { operation: 'success', data: result };
+  } catch (e: any) {
+    console.error('read result', e);
+    if (e.code == '42703') {
+      return { operation: 'error', message: e.routine };
+    }
+    return { operation: 'error', message: 'unknow error!' };
+  } finally {
+    dbClient.release();
+    console.log('final database release on insert');
+  }
+};
+
+export const getRole = async () => {
+  const dbClient = await pool.connect();
+  try {
+    const query = `
+      SELECT  * FROM "Role"
+  `;
+    const response = await pool.query(query);
+    const result = response.rows;
+    return { operation: 'success', data: result };
+  } catch (e: any) {
+    console.error('read result', e);
+    if (e.code == '42703') {
+      return { operation: 'error', message: e.routine };
+    }
+    return { operation: 'error', message: 'unknow error!' };
+  } finally {
+    dbClient.release();
+    console.log('final database release on insert');
+  }
+};
+
+export const getDepartment = async () => {
+  const dbClient = await pool.connect();
+  try {
+    const query = `
+      SELECT  * FROM "Department"
+  `;
+    const response = await pool.query(query);
+    const result = response.rows;
+    return { operation: 'success', data: result };
+  } catch (e: any) {
+    console.error('read result', e);
     if (e.code == '42703') {
       return { operation: 'error', message: e.routine };
     }

@@ -25,6 +25,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { SessionProvider } from 'next-auth/react';
 import { mainMenu, secondaryMenu } from './menu';
 import AccountInfo from './accountInfo';
+import useIsMobile from '@/app/_utils/hooks/uselsMobile';
 /*
 import Chart from "./Chart";
 import Deposits from "./Deposits";
@@ -112,7 +113,14 @@ type LayoutProps = Required<{
 }>;
 
 export default function Layout({ children }: LayoutProps) {
+  const isMobile = useIsMobile();
+  console.log(isMobile);
   const [open, setOpen] = React.useState(true);
+  React.useEffect(() => {
+    // Update `open` based on the current `isMobile` value whenever it changes
+    setOpen(isMobile ? false : true);
+  }, [isMobile]);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -197,27 +205,6 @@ export default function Layout({ children }: LayoutProps) {
                 >
                   {children}
                   {/*<Chart />*/}
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 140,
-                  }}
-                >
-                  <span>deposits</span>
-                  {/*<Deposits />*/}
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <span>orders</span>
-                  {/*<Orders />*/}
                 </Paper>
               </Grid>
             </Grid>
