@@ -1,9 +1,6 @@
 {
-  "extends": [
-    "next/core-web-vitals", 
-    "next/typescript", 
-    "prettier"
-  ],
+  "ignorePatterns": ["src/lambda/"],
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
   "rules": {
     "no-unused-vars": "off", // Disable the base rule
     "@typescript-eslint/no-unused-vars": [
